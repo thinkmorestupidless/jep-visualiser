@@ -4,9 +4,17 @@ A little experiment to visualise the JDK releases and their constituent JEPs.
 
 > Live demo available at https://jep-visualiser.herokuapp.com/
 
-## Run it yourself?
+![Screenshot of JEP Visualiser running](assets/screenshot.png)
 
-Sure, you can just use the local run script:
+## What does it do?
+
+It provides a visual timeline of the JEPs involved in each of the JDK releases.
+
+It does this by scraping data from https://openjdk.java.net, transforming that data and using `TimelineJs` to build the timeline view.
+
+## How do i run it myself?
+
+Easy, you just use the local run script:
 
 ```shell script
 ./scripts/run-locally.sh
@@ -26,6 +34,13 @@ If you want to trigger the data to be recollected _without_ re-running the conta
 ```shell script
 docker exec -it jep-visualiser /bin/sh
 rm CONTAINER_STARTED
+```
+
+## How do i build and run it as a Docker container?
+
+```shell script
+docker build --tag jep-visualiser .
+docker run -it -p 8000:8000 jep-visualiser
 ```
 
 ## More details?
