@@ -2,7 +2,7 @@
 
 A little experiment to visualise the JDK releases and their constituent JEPs.
 
-> Live demo available at https://jep-visualiser.thinkmorestupidless.com
+> Live demo available at https://jep-visualiser.herokuapp.com/
 
 ## Run it yourself?
 
