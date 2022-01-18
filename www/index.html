@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <title>JEP Timeline</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Timeline visualisation of JEP data">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <!-- Bootstrap core CSS -->
+    <link href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- CSS-->
+    <link title="timeline-styles" rel="stylesheet" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
+    <!--FONT-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bevan%7CPontano+Sans&amp;amp;subset=latin,latin">
+    <!--JS-->
+    <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar example">
+        <div class="container-fluid">
+        <a class="navbar-brand" href="#">JEP Visualiser</a>
+        <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbarsExample03" style="">
+            <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false">Select a JDK</a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown03">
+                <li><a class="dropdown-item" href="#10">10</a></li>
+                <li><a class="dropdown-item" href="#11">11</a></li>
+                <li><a class="dropdown-item" href="#12">12</a></li>
+                <li><a class="dropdown-item" href="#13">13</a></li>
+                <li><a class="dropdown-item" href="#14">14</a></li>
+                <li><a class="dropdown-item" href="#15">15</a></li>
+                <li><a class="dropdown-item" href="#16">16</a></li>
+                <li><a class="dropdown-item" href="#17">17</a></li>
+                <li><a class="dropdown-item" href="#18">18</a></li>
+                </ul>
+            </li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+    <main>
+      <div id="timeline-embed"></div>
+    </main>
+    <script src="https://getbootstrap.com/docs/5.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+        function locationHashChanged( e ) {
+            loadTimeline(location.hash.substring(1))
+        }
+
+        function loadTimeline(jdk) {
+          var timeline = new TL.Timeline('timeline-embed', 'data/' + jdk + '.json');
+        }
+
+        window.onhashchange = locationHashChanged;
+        loadTimeline(17)
+      </script>
+  </body>
+</html>
