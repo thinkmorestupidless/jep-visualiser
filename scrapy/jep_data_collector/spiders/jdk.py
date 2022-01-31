@@ -30,7 +30,7 @@ class JdkSpider(scrapy.Spider):
         return jdk
 
     def parse_summary(self, response):
-        paragraphs = response.xpath('//div[@id = "main"]/p').extract()
+        paragraphs = response.xpath('//div[@id = "main"]/*')[1:].getall()
         paragraphs = [paragraph.replace('\n',' ').replace(u'\xa0',' ') for paragraph in paragraphs]
         return ''.join(paragraphs)
     

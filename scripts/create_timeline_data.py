@@ -27,10 +27,22 @@ def create_event_from_jep(jep):
     text = {'headline': f'{jep["id"]}: {jep["title"]}', 'text': summary}
     return {'start_date': start_date, 'text': text}
 
+def create_event_from_jdk(jdk):
+    if 'release_date' in jdk and jdk['release_date'] != '(in development)':
+        dt = datetime.strptime(jdk['release_date'], 'GA %Y/%m/%d')
+        start_date = {'year': dt.year, 'month': dt.month, 'day': dt.day}
+        summary = jdk['summary']
+        text = {'headline': f'JDK {jdk["version"]}', 'text': summary}
+        return {'start_date': start_date, 'text': text}
+    else:
+        return None
+
 data_dir = sys.argv[1]
-jep_data = json.load(open(f'{data_dir}/jeps.json'))
-jdk_data = json.load(open(f'{data_dir}/jdks.json'))
+jep_data = json.load(open(f'{data_dir}/scraped-jeps.json'))
+jdk_data = json.load(open(f'{data_dir}/scraped-jdks.json'))
 output_dir = sys.argv[2]
+
+jdk_events = []
 
 for jdk in jdk_data:
     events = []
@@ -45,8 +57,20 @@ for jdk in jdk_data:
         event = create_event_from_jep(jep)
         events.append(event)
 
+    jdk_event = create_event_from_jdk(jdk)
+    if jdk_event is not None:
+        jdk_events.append(jdk_event)
+
     with open(f'{output_dir}/{jdk["version"]}.json', 'w') as f:
         f.write(json.dumps(newdata))
+
+with open(f'{output_dir}/jdks.json', 'w') as f:
+    f.write(json.dumps({'events': jdk_events}))
+
+for jep in jep_data:
+    event = create_event_from_jep(jep)
+    with open(f'{output_dir}/{jep["id"]}.json', 'w') as f:
+        f.write(json.dumps(event))
 
 """
 The data file should be in JSON format with the following structure

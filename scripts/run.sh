@@ -21,8 +21,8 @@ fi
 # collect data
 
 cd "$SCRAPY_DIR"
-scrapy crawl jdk -O "$DATA_DIR/jdks.json"
-scrapy crawl jep -O "$DATA_DIR/jeps.json"
+scrapy crawl jdk -O "$DATA_DIR/scraped-jdks.json"
+scrapy crawl jep -O "$DATA_DIR/scraped-jeps.json"
 
 # transform data
 

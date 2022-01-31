@@ -30,7 +30,9 @@ class JepSpider(scrapy.Spider):
         return response.xpath('//h1/text()').extract_first().split(':')[1].strip()
 
     def parse_summary(self, response, jep):
-        return response.css('div.markdown p')[0].extract().replace('\n',' ')
+        summaries = response.xpath('//div[@class = "markdown"]/*').getall()
+        summaries = [summary.replace('<div class="markdown">','').replace('</div>','').replace('h2','b') for summary in summaries]
+        return ''.join(summaries)
 
     def parse_table_rows(self, response, jep):
         table_rows = response.css('td')

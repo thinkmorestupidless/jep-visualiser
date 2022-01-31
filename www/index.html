@@ -48,15 +48,62 @@
     <script src="https://getbootstrap.com/docs/5.1/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript">
         function locationHashChanged( e ) {
-            loadTimeline(location.hash.substring(1))
+          var afterHash = location.hash.substring(1)
+          if (afterHash == 'jdks') {
+            loadTimeline('/data/jdks.json')
+          } else {
+            var arr = afterHash.split(',')
+            if (arr.length == 1) {
+              loadTimeline('/data/' + arr[0] + '.json')
+            } else {
+              loadJeps(arr)
+            }
+          }
         }
 
-        function loadTimeline(jdk) {
-          var timeline = new TL.Timeline('timeline-embed', 'data/' + jdk + '.json');
+        function loadTimeline(dataOrUrl) {
+          var timeline = new TL.Timeline('timeline-embed', dataOrUrl);
+        }
+
+        function loadJeps(jeps) {
+          var promises = [];
+          for (const jep in jeps) {
+              let url = 'data/' + jeps[jep] + '.json';
+              promises.push(loadJSON(url));
+          }
+          Promise.all(promises).then(function(results) {
+              var events = []
+              for (var i in results) {
+                events.push(JSON.parse(results[i]))
+              }
+              loadTimeline({'events': events})
+          }, function(err) {
+              console.log('ERROR: ' + err)
+          });
+        }
+
+        function loadJSON(url) {   
+          console.log('loading json from ' + url)
+          return new Promise(function(resolve, reject) {
+            var xobj = new XMLHttpRequest();
+            xobj.overrideMimeType("application/json");
+            xobj.open('GET', url, true);
+            xobj.onreadystatechange = function () {
+              if (xobj.readyState == 4) {
+                if (xobj.status == "200") {
+                  resolve(xobj.responseText);
+                } else {
+                  reject(xobj.status + ': ' + xobj.statusText)
+                }
+              }
+            };
+            xobj.send(null);  
+          });
         }
 
         window.onhashchange = locationHashChanged;
-        loadTimeline(17)
+        loadTimeline('/data/17.json')
+
       </script>
   </body>
 </html>
