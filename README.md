@@ -12,6 +12,14 @@ It provides a visual timeline of the JEPs involved in each of the JDK releases.
 
 It does this by scraping data from https://openjdk.java.net, transforming that data and using `TimelineJs` to build the timeline view.
 
+## How do I use it?
+
+Visiting the web root `/` it will default to showing you the JEPs included in JDK 17. There's a drop-down/combo-box for selecting other JDK versions.
+
+To see the JDK versions themselves (and when they were released) visit https://jep-visualiser.herokuapp.com/#jdks
+
+To customise the JEPs included in the timeline just add them as a comma-separated list in the url. For instance, to see all the JEPs that have impact on _Safety_ visit https://jep-visualiser.herokuapp.com/#193,266,338,371,383,385,393,389,396,403,412,414,416,417,419
+
 ## How do i run it myself?
 
 Easy, you just use the local run script:
